@@ -1,57 +1,64 @@
 import UIKit
+import Foundation
 
 enum Countries: String {
-    case USSR = "СССР"
-    case Russia = "Россия"
-    case China = "Китай"
-    case EU = "Европа"
-    case USA = "США"
+    case Russia
+    case USA
+    case EU
+    case China
 }
+
+
 
 class Track {
     var name: String
     var compositor: String
-    var long: Float
+    var long: Double
     var country: Countries
     
-    init(name: String, compositor: String, long: Float, country: Countries) {
+    init(name: String, compositor: String, long: Double, country: Countries) {
         self.name = name
         self.compositor = compositor
         self.long = long
         self.country = country
-        
     }
 }
 
-class Category {
+
+
+class Cathegory {
+    
     var name: String = ""
     lazy var trackList: [Track] = []
     func addNewTrack(track: Track) {
         trackList.append(track)
     }
+
     func removeTrack() {
         trackList.removeLast()
-    }
+}
 }
 
-let category = Category()
+enum Cathegories: String {
+    case Pop
+    case Rock
+    case Shanson
+}
 
+class Library {
+    var cathegories: [Cathegory] = []
+}
 
-let track = Track(name: "Трава у дома", compositor: "Владимир Мигуля", long: 4.42,
-                  country: Countries.USSR)
+let library = Library()
 
-let secondTrack = Track(name: "Лесник", compositor: "Король и Шут", long: 3.11,
-                        country: Countries.Russia)
+let popMusic = Cathegory()
+let rockMusic = Cathegory()
+let shanson = Cathegory()
 
-let thirdChannel = Track(name: "Personal Jesus", compositor: "Marilyn Manson", long: 4.06, country: Countries.USA)
+library.cathegories.append(popMusic)
+library.cathegories.append(rockMusic)
+library.cathegories.append(shanson)
 
-track.country.rawValue
-secondTrack.country.rawValue
-
-category.addNewTrack(track: track)
-category.addNewTrack(track: secondTrack)
-
-category.trackList.count
-
-category.removeTrack()
-category.trackList.count
+library.cathegories[0].name = Cathegories.Pop.rawValue
+library.cathegories[1].name = Cathegories.Rock.rawValue
+library.cathegories[2].name = Cathegories.Shanson.rawValue
