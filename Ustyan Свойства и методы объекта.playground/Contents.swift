@@ -1,54 +1,49 @@
 import UIKit
-import Foundation
 
-enum Compositor: String {
-    case AntonioLucioVivaldi = "Антонио Лучио Вивальди"
+enum Author {
     case LinkinPark
     case Evanescence
     case Sting
     case Queen
-    case Maksim = "Максим"
+    case Maksim
     case LudovicoEinaudi
-    case Earthlings = "Земляне"
 }
-
-enum Countries: String {
-    case Russia = " Российская Федерация"
-    case HolyRomanEmpire = "Священная Римская Империя"
-    case USSR = "СССР"
-    case USA = "Америка"
-    case EU = "Европейский союз"
-    case China = "Китай"
-    
-}
-
-
 
 struct Track {
+    enum Country {
+        case Russia
+        case Finland
+        case Ukraine
+        case Poland
+        case UnitedStates
+    }
+    
     var name: String
-    var compositor: Compositor
-    var long: Double
-    var country: Countries
+    var author: Author
+    var time: Double
+    var country: Country
     
 }
 
-
-
 class Category {
-    
     var name: String
-    var compositor: Compositor
+    var author: Author
     lazy var trackList: [Track] = []
-    
-    init(name: String, compositor: Compositor) {
-        self.compositor = compositor
-        self.name = name
+    var countTrackList : Int {
+        return trackList.count
     }
     
+    init(name: String, author: Author) {
+        self.name = name
+        self.author = author
+    }
+    
+    //    Добавление треков (по экземпляру)
     func addTrack(newTrack: Track) {
         trackList.append(newTrack)
     }
-
+    
+    //    Удаление треков по названию
     func removeTrackbyName(delNameTrack: String) {
         for (i,j) in trackList.enumerated() {
             if (j.name == delNameTrack) {
@@ -58,15 +53,17 @@ class Category {
         }
     }
     
-    func numberOfTracks() -> Int {
-        return trackList.count
+    //    Удаление треков по экземпляру
+    func removeTrack(delNameTrack: Track) {
+        for (i,j) in trackList.enumerated() {
+            if (j.name == delNameTrack.name) {
+                trackList.remove(at: i)
+                print("Трек \(delNameTrack.name) удален")
+            }
+        }
     }
-}
-
-enum Cathegories: String {
-    case Pop
-    case Rock
-    case Shanson
+    
+    
 }
 
 class Library {
@@ -89,15 +86,15 @@ class Library {
     }
 }
 
-var library = Library(name: "Музыкальная библиотека")
+var library = Library(name: "Библиотека Жени")
 
-var category1 = Category(name: "Rock", compositor: Compositor.Earthlings)
-var category2 = Category(name: "Pop", compositor: Compositor.Maksim)
-var category3 = Category(name: "Classic", compositor: Compositor.AntonioLucioVivaldi)
+var category1 = Category(name: "Rock", author: Author.Evanescence)
+var category2 = Category(name: "Pop", author: Author.Maksim)
+var category3 = Category(name: "Classic", author: Author.LudovicoEinaudi)
 
-var track1 = Track(name: "Трава у дома", compositor: Compositor.Earthlings, long: 282, country: Countries.USSR)
-var track2 = Track(name: "Знаешь ли ты", compositor: Compositor.Maksim, long: 400, country: Countries.Russia)
-var track3 = Track(name: "Concerto No. 4 in F minor (L'inverno/ Winter) RV297 (Op. 8 No. 4): I. Allegro non molto", compositor: Compositor.AntonioLucioVivaldi, long: 208, country: Countries.HolyRomanEmpire)
+var track1 = Track(name: "My Immortal", author: Author.Evanescence, time: 264, country: Track.Country.UnitedStates)
+var track2 = Track(name: "Bring Me To Life", author: Author.Evanescence, time: 231, country: Track.Country.UnitedStates)
+var track3 = Track(name: "Hello Cat", author: Author.Evanescence, time: 182, country: Track.Country.UnitedStates)
 
 library.addCategory(newCategory: category1)
 library.addCategory(newCategory: category2)
@@ -107,14 +104,15 @@ category1.addTrack(newTrack: track1)
 category1.addTrack(newTrack: track2)
 category1.addTrack(newTrack: track3)
 
+print("---")
 
-
-//Количество треков в категории 1
+//Проверка кол-ва треков в категории 1
 for i in category1.trackList {
     print(i.name)
 }
-//Удалим трек "Знаешь ли ты"
-category1.removeTrackbyName(delNameTrack: "Знаешь ли ты" )
+//Удалим трек My Immortal из категории
+//category1.removeTrackbyName(delNameTrack: "My Immortal")
+category1.removeTrack(delNameTrack: track1 )
 
 
 //Проверка кол-ва треков в категории 1
@@ -141,7 +139,5 @@ for i in category2.trackList {
     print(i.name)
 }
 
-//Проверка кол-ва треков в категории 3
-for i in category3.trackList {
-    print(i.name)
-}
+
+
