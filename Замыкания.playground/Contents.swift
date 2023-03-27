@@ -1,33 +1,38 @@
 import UIKit
 
 
-var referenceFuelValue = 1800
-func calculateFuel(Height: Int, Width: Int, calc: (Int, Int) -> Int) -> Bool {
+var referenceFuelValue = 68200
+func calculateFuel(calc: (Int, Int) -> Int) -> Bool {
     
-    print(calc(Height, Width))
-    if calc(Height, Width) == referenceFuelValue {
+    let distance = 1000
+    let weight = 600
+    let sumFuel = calc(distance, weight)
+    print(calc(distance, weight))
+    if calc(distance, weight) == referenceFuelValue {
         return true
     } else {
         return false
     }
 }
 
-//первый инженер
-calculateFuel(Height: 77, Width: 21, calc: { (Height: Int, Width: Int) -> Int in
-    var fuelConsumption = (Height * Width)
-    return fuelConsumption
-})
 
-//второй инженер
-calculateFuel(Height: 7, Width: 11, calc: { (Height: Int, Width: Int) -> Int in
-    var fuelConsumption = (Height * Width)*2
-    return fuelConsumption
-})
+let engineerFirst = { (distance: Int, weight: Int) -> Int in
+    let sumFuel = (distance * 3) + (weight * 5)
+    return sumFuel
+}
+
+let engineerSecond = { (distance: Int, weight: Int) -> Int in
+    let sumFuel = (distance * 67) + (weight * 2)
+    return sumFuel
+}
+
+calculateFuel(calc: engineerFirst)
+calculateFuel(calc: engineerSecond)
 
 
 
-calculateFuel(Height: 6, Width: 4) {($0 * $1) * 6}
-calculateFuel(Height: 56, Width: 24) {($0 * $1) * 8}
-calculateFuel(Height: 2, Width: 452) {($0 * $1) * 7}
-calculateFuel(Height: 253, Width: 67) {($0 * $1) * 100}
+let abbreviatedCalculationFirst: (Int, Int) -> Int = { $0 * 3 + $1 * 5 }
+let abbreviatedCalculationSecond: (Int, Int) -> Int = {$0 * 67 + $1 * 2}
 
+calculateFuel(calc: abbreviatedCalculationFirst)
+calculateFuel(calc: abbreviatedCalculationSecond)
