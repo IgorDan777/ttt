@@ -48,7 +48,7 @@ class Category {
     func addTrack(newTrack: Track) {
         trackList.append(newTrack)
     }
-
+    
     func removeTrackbyName(delNameTrack: String) {
         for (i,j) in trackList.enumerated() {
             if (j.name == delNameTrack) {
@@ -58,6 +58,15 @@ class Category {
         }
     }
     
+    func removeTrack(delNameTrack: Track) {
+        for (i,j) in trackList.enumerated() {
+            if (j.name == delNameTrack.name) {
+                trackList.remove(at: i)
+                print("Трек \(delNameTrack.name) удален")
+            }
+        }
+    }
+
     func numberOfTracks() -> Int {
         return trackList.count
     }
@@ -86,6 +95,14 @@ class Library {
     func changeCategoryByTrack(track: Track, inCategory: Category, toCategory: Category) {
         inCategory.removeTrackbyName(delNameTrack: track.name)
         toCategory.addTrack(newTrack: track)
+    }
+    func removeCategory(delCategory: Category) {
+        for (i,j) in categoryList.enumerated() {
+            if (j.name == delCategory.name) {
+                categoryList.remove(at: i)
+                print("Категория \(delCategory.name) удалена")
+            }
+        }
     }
 }
 
